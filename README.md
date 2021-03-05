@@ -1,1 +1,3 @@
-# Voilà l'ensemble des fichiers créés par Mesquita Quentin, pour/lors du cours de Programmation et Algorithme à l'IMAC.
+# Prog et Algo
+
+Voilà l'ensemble des fichiers créés par Mesquita Quentin, pour/lors du cours de Programmation et Algorithme à l'IMAC.
