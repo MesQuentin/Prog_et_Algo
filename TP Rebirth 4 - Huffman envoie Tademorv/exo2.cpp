@@ -17,7 +17,12 @@ void HuffmanHeap::insertHeapNode(int heapSize, unsigned char c, int frequences)
       * Do Like Heap::insertHeapNode (exo1) but use HuffmanNode instead of
       * int, this->get(i): HuffmanNode*  <-> this->get(i).frequences
      **/
+
     int i = heapSize;
+    (*this)[i]= frequences;
+    while(i>=0 && this->get(i).frequences>this->get((i-1)/2).frequences){
+        this->swap(i, (i-1)/2);
+    }
 }
 
 void HuffmanNode::insertNode(HuffmanNode* node)
@@ -34,8 +39,15 @@ void HuffmanNode::insertNode(HuffmanNode* node)
          * fréquence devient la somme de ses nouveaux enfants et
          * son caractère devient '\0'
         **/
+
         HuffmanNode* copy = new HuffmanNode(this->character, this->frequences);
         this->character = '\0';
+        if ( copy->get_value() > this->get_value()) {
+            this->left = copy;
+        }
+        else {
+            this->right = copy;
+        }
     }
     else
     {
@@ -46,6 +58,13 @@ void HuffmanNode::insertNode(HuffmanNode* node)
          * Remarques: Si un noeud n'est pas une feuille alors ses deux enfants sont
          * non-null (grâce à la condition d'au-dessus)
         **/
+
+        if ( 3*node->frequences < this->frequences){
+            this->left->insertNode(node);
+        }
+        else {
+            this->right->insertNode(node);
+        }
     }
     /**
      * à chaque insertion on additionne au noeud courant la valeur
@@ -82,6 +101,11 @@ void charFrequences(string data, Array& frequences)
       * frequences is an array of 256 int. frequences[i]
       * is the frequence of the caracter with ASCII code i
      **/
+
+    for (int i=0; i< data.size(); i++){
+        frequences.get((int)data.at(i))++;
+    }
+
 }
 
 void huffmanHeap(Array& frequences, HuffmanHeap& heap, int& heapSize)
@@ -90,7 +114,15 @@ void huffmanHeap(Array& frequences, HuffmanHeap& heap, int& heapSize)
       * Do like Heap::buildHeap. Use only non-null frequences
       * Define heapSize as numbers of inserted nodes
      **/
+
     heapSize = 0;
+    for (int i=0; i< (int)frequences.size(); i++){
+        if(frequences.get(i)!=0){
+            heap.insertHeapNode(heapSize,(char)i, frequences.get(i));
+            heapSize++;
+        }
+    }
+
 }
 
 void huffmanDict(HuffmanHeap& heap, int heapSize, HuffmanNode*& dict)
@@ -98,7 +130,15 @@ void huffmanDict(HuffmanHeap& heap, int heapSize, HuffmanNode*& dict)
     /**
       * For each value in heap, insert a new node in dict
      **/
+
     dict = new HuffmanNode(heap[0].character, heap[0].frequences);
+
+    for (int i=1 ; i<heapSize ; i++)
+    {
+        HuffmanNode* POUR_LE_GONDOR = new HuffmanNode(heap[i].character, heap[i].frequences);
+        dict->insertNode(POUR_LE_GONDOR);
+    }
+
 }
 
 string huffmanEncode(HuffmanNode** characters, string toEncode)
@@ -108,8 +148,14 @@ string huffmanEncode(HuffmanNode** characters, string toEncode)
       * characters[i] is the HuffmanNode representing the
       * character with the ASCII code i
      **/
+
     string encoded = "";
+    for(int i=0; i<toEncode.size();i++){
+        int k=toEncode.at(i);
+        encoded+=characters[k]->code;
+    }
     return encoded;
+
 }
 
 string huffmanDecode(HuffmanNode* dict, string toDecode)
@@ -119,8 +165,31 @@ string huffmanDecode(HuffmanNode* dict, string toDecode)
       * to travel the Huffman dict. Each time you get a leaf, get
       * the decoded character of this node.
      **/
+
     string decoded = "";
+    HuffmanNode *PIRATE_DE_L_ESPACE= dict;
+
+    for(int i=0; i<toDecode.size(); i++){
+
+        if(PIRATE_DE_L_ESPACE->isLeaf()){
+            decoded+=PIRATE_DE_L_ESPACE->character;
+            PIRATE_DE_L_ESPACE=dict;
+            i--;
+        }
+
+        else {
+            if(toDecode.at(i)=='0'){
+                PIRATE_DE_L_ESPACE=PIRATE_DE_L_ESPACE->left;
+            }
+
+            else {
+                PIRATE_DE_L_ESPACE=PIRATE_DE_L_ESPACE->right;
+            }
+        }
+    }
+    decoded+=PIRATE_DE_L_ESPACE->character;
     return decoded;
+
 }
 
 
