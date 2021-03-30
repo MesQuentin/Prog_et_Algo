@@ -1,3 +1,3 @@
 # Prog et Algo
 
-Voilà l'ensemble des fichiers créés par Mesquita Quentin, pour/lors du cours de Programmation et Algorithme à l'IMAC.
+Apprendre à coder, ça ne se fait pas en trois jours. Pour ça, faut pratiquer, et pour pratiquer faut coder. Donc pour coder, faut coder. Bref, voici tous les trucs qui m'ont appris le C++ ...
