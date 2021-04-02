@@ -17,20 +17,19 @@ std::vector<string> TP5::names(
 
 int HashTable::hash(std::string element)
 {
-    //Désolé moi du futur mais aujourd'hui je suis vraiment pas inspiré. Le TP à pas l'air trop dur mais courage
-
-
     // use this->size() to get HashTable size
-    return 0;
+
+    int HACHAGE_EN_COURS = (int)element[0];
+    HACHAGE_EN_COURS = HACHAGE_EN_COURS % this->size();
+    return HACHAGE_EN_COURS;
 }
 
 void HashTable::insert(std::string element)
 {
-    //suis maussade aujourd'hui, c'est bien dommage, j'ai pas envie de parler ni de bosser
-    //Viens ! On écrit Era Temporis !
-    //Les deux lignes crées aujourd'hui te disent merci
-
     // use (*this)[i] or this->get(i) to get a value at index i
+
+    int CA_VA_RENTRER_J_AI_CONFIANCE = hash(element);
+    this->get(CA_VA_RENTRER_J_AI_CONFIANCE) = element;
 }
 
 /**
@@ -41,12 +40,24 @@ void HashTable::insert(std::string element)
  */
 void buildHashTable(HashTable& table, std::string* names, int namesCount)
 {
-
+    int i;
+    for (i=0 ; i<namesCount; i++){
+        table.insert(names[i]);
+    }
 }
 
 bool HashTable::contains(std::string element)
 {
     // Note: Do not use iteration (for, while, ...)
+
+    if (this->get(hash(element)) == element) {
+        return true;
+    }
+
+    else {
+        return false;
+    }
+
     return false;
 }
 

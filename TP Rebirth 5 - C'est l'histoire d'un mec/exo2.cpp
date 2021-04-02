@@ -23,7 +23,16 @@ std::vector<string> TP5::names(
 unsigned long int hash(string key)
 {
     // return an unique hash id from key
-    return 0;
+
+    int DESOLE_CHERIE =0;
+    int CA_VA_COUPER =0;
+
+    while(key[CA_VA_COUPER]!= '\0'){
+
+        DESOLE_CHERIE += (int) key[CA_VA_COUPER] * pow(127, key.size()- CA_VA_COUPER);
+        CA_VA_COUPER++;
+    }
+    return DESOLE_CHERIE;
 }
 
 struct MapNode : public BinaryTree
@@ -52,7 +61,26 @@ struct MapNode : public BinaryTree
      */
     void insertNode(MapNode* node)
     {
+        if(node->key_hash > this->key_hash){
 
+            if (this->right == NULL){
+                this->right = node;
+            }
+
+            else {
+                this->right->insertNode(node);
+            }
+        }
+
+        else{
+            if (this->left == NULL){
+                this->left = node;
+            }
+
+            else {
+                this->left->insertNode(node);
+            }
+        }
     }
 
     void insertNode(string key, int value)
@@ -77,9 +105,14 @@ struct Map
      * @param key
      * @param value
      */
+
     void insert(string key, int value)
     {
-
+        if(this->root != NULL){
+            this->root->insertNode(key, value);
+        }else{
+            this->root = new MapNode(key,value);
+        }
     }
 
     /**
@@ -87,9 +120,29 @@ struct Map
      * @param key
      * @return
      */
+
     int get(string key)
     {
-        return -1;
+        int kHash = hash(key);
+        int VALEUR_ET_HONNEUR = -1;
+        MapNode* AQUIESCE = this->root;
+
+        while(AQUIESCE != NULL){
+
+            if (AQUIESCE->key_hash > kHash){
+                AQUIESCE = AQUIESCE->right;
+            }
+
+            else if (AQUIESCE->key_hash < kHash){
+                AQUIESCE = AQUIESCE->left;
+            }
+
+            else{
+                VALEUR_ET_HONNEUR = AQUIESCE->value;
+                return VALEUR_ET_HONNEUR;
+            }
+        }
+        return VALEUR_ET_HONNEUR;
     }
 
     MapNode* root;
