@@ -1,3 +1,0 @@
-# Prog et Algo
-
-Apprendre à coder, ça ne se fait pas en trois jours. Pour ça, faut pratiquer, et pour pratiquer faut coder. Donc pour coder, faut coder. Bref, voici tous les trucs qui m'ont appris le C++ ...
